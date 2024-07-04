@@ -3,7 +3,7 @@ import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter, crea
 import { Layout } from './components/Layout';
 import { Main } from './routes/Main';
 import { SignUp } from './routes/SignUp';
-import { SignIn } from './routes/SignIn';
+import { SignIn, singinAction } from './routes/SignIn';
 import { useEffect, useState } from 'react';
 import { ErrorPage } from './routes/ErrorPage';
 
@@ -14,8 +14,16 @@ function App() {
     createRoutesFromElements(
       <Route path='/' element={<Layout />} errorElement={<ErrorPage />}>
         <Route path='/' element={<Main />} />
-        <Route path='/signup' element={<SignUp setToken={setToken} />} />
-        <Route path='/signin' element={<SignIn setToken={setToken} />} />
+        <Route
+          path='/signup'
+          element={<SignUp setToken={setToken} />}
+          action={singinAction}
+        />
+        <Route
+          path='/signin'
+          element={<SignIn setToken={setToken} />}
+          action={singinAction}
+        />
       </Route>
     )
   )

@@ -1,13 +1,25 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
+import { Form, redirect, useActionData, useNavigate } from 'react-router-dom';
+import { fetchSignIn } from '../apis/auth';
 
-export const SignIn = () => {
-  const usernameRef = useRef(null)
-  const passwordRef = useRef(null)
+export const singinAction = async ({ request }) => {
+  const formData = await request.formData()
+  const inputs = Object.fromEntries(formData)
+  const data = await fetchSignIn(inputs)
+  console.log(data);
+  if (data?.status === "success") return data
+  return null
+}
+export const SignIn = ({ setToken }) => {
+  const actionData = useActionData()
+  const navigate = useNavigate()
 
-  const handleSignIn = () => {
-    console.log(usernameRef.current.value, passwordRef.current.value);
-
-  }
+  useEffect(() => {
+    console.log(actionData);
+    if (actionData?.status !== "success") return
+    setToken(actionData.token)
+    return navigate("/")
+  }, [actionData])
   return (
     <div>
       <h2>Sign In</h2>
@@ -19,20 +31,23 @@ export const SignIn = () => {
         alignItems: 'center',
         border: "solid 1px gray"
       }}>
-        <div style={{ padding: 8, width: 300 }}>
+        <Form
+          method='post'
+          style={{ padding: 8, width: 300 }}
+        >
           <div>
             <label>username: </label>
-            <input type="text" ref={usernameRef} />
+            <input type="text" name='username' />
           </div>
           <div>
             <label>password: </label>
-            <input type="text" ref={passwordRef} />
+            <input type="password" name='password' />
           </div>
           <div>
-            <button onClick={handleSignIn}>Sign In</button>
+            <button type='submit'>Sign In</button>
             <button>cancel</button>
           </div>
-        </div>
+        </Form>
       </div>
     </div>
   )
