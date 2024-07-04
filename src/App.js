@@ -1,17 +1,18 @@
 import './App.css';
 import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import { Layout } from './components/Layout';
-import { Main } from './pages/Main';
-import { SignUp } from './pages/SignUp';
-import { SignIn } from './pages/SignIn';
+import { Main } from './routes/Main';
+import { SignUp } from './routes/SignUp';
+import { SignIn } from './routes/SignIn';
 import { useEffect, useState } from 'react';
+import { ErrorPage } from './routes/ErrorPage';
 
 function App() {
   const [token, setToken] = useState("")
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path='/' element={<Layout />} >
+      <Route path='/' element={<Layout />} errorElement={<ErrorPage />}>
         <Route path='/' element={<Main />} />
         <Route path='/signup' element={<SignUp setToken={setToken} />} />
         <Route path='/signin' element={<SignIn setToken={setToken} />} />
