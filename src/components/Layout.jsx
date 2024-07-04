@@ -15,9 +15,11 @@ export const Layout = () => {
           border: "solid 1px gray",
           padding: "8px 16px"
         }}>
-          <h1 style={{
-            margin: 0
-          }}>WorldSkills: Games</h1>
+          <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
+            <h1 style={{
+              margin: 0
+            }}>WorldSkills: Games</h1>
+          </Link>
         </div>
         <div style={{
           display: 'flex',
@@ -33,7 +35,7 @@ export const Layout = () => {
         width: "100%"
       }}>
         <div style={{
-          maxWidth: 1000,
+          maxWidth: 800,
           width: '100%'
         }}>
           <Outlet />
